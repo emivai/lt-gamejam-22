@@ -70,8 +70,15 @@ public class Movement : MonoBehaviour
     {
 		anim.SetBool("jump", false);
     }
-	public void Move(float move, bool crouch, bool jump)
+	public void Move(float move, bool crouch, bool jump,ref bool attack)
 	{
+		// Deals with attacking
+		if(attack){
+			anim.SetTrigger("attack");
+			attack = false;
+		}
+		
+
 		// If crouching, check to see if the character can stand up
 		if (!crouch)
 		{
