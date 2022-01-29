@@ -21,6 +21,15 @@ public class Movement : MonoBehaviour
 
 	private Animator anim;
 
+	/*
+	 * MY OWN CODE
+	 */
+	private float attackCooldown = 0;
+	 /*
+	 * MY OWN CODE
+	 */
+
+
 
 	[Header("Events")]
 	[Space]
@@ -72,12 +81,11 @@ public class Movement : MonoBehaviour
     }
 	public void Move(float move, bool crouch, bool jump,ref bool attack)
 	{
-		// Deals with attacking
-		if(attack){
+		if(attack && attackCooldown > 0.5f){
 			anim.SetTrigger("attack");
-			attack = false;
 		}
 		
+		attackCooldown += Time.deltaTime;
 
 		// If crouching, check to see if the character can stand up
 		if (!crouch)

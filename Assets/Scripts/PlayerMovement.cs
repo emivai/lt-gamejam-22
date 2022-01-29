@@ -35,12 +35,21 @@ public class PlayerMovement : MonoBehaviour
 		}
 		anim.SetBool("walking", horizontalMove != 0);
 
-		if(Input.GetKeyDown(KeyCode.Mouse0) && !attack){
+		/*
+		 * Check whether the mouse button is pressed
+		 * plus the cooldown hasn't expired
+		 */
+		if(Input.GetKeyDown(KeyCode.Mouse0)){
 			attack = true;
 
-			Debug.Log("askdjasd");
+			Debug.Log("KEY DOWN");
 		}
-		
+
+		if(Input.GetKeyUp(KeyCode.Mouse0)){
+			attack = false;
+
+			Debug.Log("KEY UP");
+		}
 	}
     
     void FixedUpdate()
