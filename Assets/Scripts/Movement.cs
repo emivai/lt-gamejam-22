@@ -79,12 +79,15 @@ public class Movement : MonoBehaviour
     {
 		anim.SetBool("jump", false);
     }
-	public void Move(float move, bool crouch, bool jump,ref bool attack)
+	public void Move(float move, bool crouch, bool jump, ref bool attack)
 	{
-		if(attack && attackCooldown > 0.5f){
+		if(attack && attackCooldown > 0.45f){
 			anim.SetTrigger("attack");
+
+
+			attackCooldown = 0;
 		}
-		
+
 		attackCooldown += Time.deltaTime;
 
 		// If crouching, check to see if the character can stand up
