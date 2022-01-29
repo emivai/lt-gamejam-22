@@ -19,6 +19,9 @@ public class Movement : MonoBehaviour
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 m_Velocity = Vector3.zero;
 
+	private Animator anim;
+
+
 	[Header("Events")]
 	[Space]
 
@@ -33,7 +36,7 @@ public class Movement : MonoBehaviour
 	private void Awake()
 	{
 		m_Rigidbody2D = GetComponent<Rigidbody2D>();
-
+		anim = GetComponent<Animator>();
 		if (OnLandEvent == null)
 			OnLandEvent = new UnityEvent();
 
@@ -55,12 +58,18 @@ public class Movement : MonoBehaviour
 			{
 				m_Grounded = true;
 				if (!wasGrounded)
+                {
+					OnLand();
 					OnLandEvent.Invoke();
+				}
+					
 			}
 		}
 	}
-
-
+	private void OnLand()
+    {
+		anim.SetBool("jump", false);
+    }
 	public void Move(float move, bool crouch, bool jump)
 	{
 		// If crouching, check to see if the character can stand up
@@ -129,6 +138,7 @@ public class Movement : MonoBehaviour
 			// Add a vertical force to the player.
 			m_Grounded = false;
 			m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+			anim.SetBool("jump", true);
 		}
 	}
 

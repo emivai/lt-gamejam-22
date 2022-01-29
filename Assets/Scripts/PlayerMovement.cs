@@ -10,7 +10,12 @@ public class PlayerMovement : MonoBehaviour
 	float horizontalMove = 0f;
 	bool jump = false;
 	bool crouch = false;
+	private Animator anim;
 
+    private void Awake()
+    {
+		anim = GetComponent<Animator>();
+	}
     // Update is called once per frame
     void Update()
     {
@@ -27,7 +32,8 @@ public class PlayerMovement : MonoBehaviour
 		{
 			crouch = false;
 		}
-    }
+		anim.SetBool("walking", horizontalMove != 0);
+	}
     
     void FixedUpdate()
     {
