@@ -27,6 +27,7 @@ public class LoadLevel : MonoBehaviour
     {
         //if <useIntegerToLoadLevel> enabled, it will load scene based on the scene index, otherwise based on scene name.
         if (useIntegerToLoadLevel)
+
         {
             SceneManager.LoadScene(iLevelToLoad);
         }
