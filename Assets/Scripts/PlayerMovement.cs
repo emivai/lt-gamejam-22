@@ -15,8 +15,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
-        
-        if(Input.GetButtonDown("Jump"))
+        if(Input.GetKey(KeyCode.Space))
         {
 			jump = true;
 		}
