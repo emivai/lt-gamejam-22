@@ -7,13 +7,15 @@ public class PlayerMovement : MonoBehaviour
 	public Movement controller;
 	
 	public float runSpeed = 40f;
+	public float climbSpeed = 10f;
 	float horizontalMove = 0f;
+	float verticalMove = 0f;
 	bool jump = false;
 	bool crouch = false;
 	bool attack = false;
 	private Animator anim;
 
-    private void Awake()
+	private void Awake()
     {
 		anim = GetComponent<Animator>();
 	}
@@ -21,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
+        verticalMove = Input.GetAxisRaw("Vertical") * climbSpeed;
         if(Input.GetKey(KeyCode.Space))
         {
 			jump = true;
@@ -54,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
     
     void FixedUpdate()
     {
-		controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump, ref attack);
+		controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump, ref attack, verticalMove * Time.fixedDeltaTime);
 		jump = false;
 	}
 }
