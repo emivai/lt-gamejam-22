@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
 		} else if(Input.GetButtonUp("Crouch"))
 		{
 			crouch = false;
-		}
+		}		
 		anim.SetBool("walking", horizontalMove != 0);
 
 		/*
