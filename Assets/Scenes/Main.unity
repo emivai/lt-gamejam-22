@@ -260,7 +260,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1437565342}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -3.17, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1703526337}
@@ -460,7 +460,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 2.5
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -492,13 +492,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6926630fd34e21c408dae26cdb43ab60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_JumpForce: 120
+  m_JumpForce: 135
   m_CrouchSpeed: 0.36
   m_MovementSmoothing: 0.05
   m_AirControl: 1
   m_WhatIsGround:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_GroundCheck: {fileID: 1437565343}
   m_CeilingCheck: {fileID: 801587281}
   m_CrouchDisableCollider: {fileID: 0}
