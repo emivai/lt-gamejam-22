@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
 	float horizontalMove = 0f;
 	bool jump = false;
 	bool crouch = false;
+	bool attack = false;
 	private Animator anim;
 
     private void Awake()
@@ -33,11 +34,27 @@ public class PlayerMovement : MonoBehaviour
 			crouch = false;
 		}
 		anim.SetBool("walking", horizontalMove != 0);
+
+		/*
+		 * Check whether the mouse button is pressed
+		 * plus the cooldown hasn't expired
+		 */
+		if(Input.GetKeyDown(KeyCode.Mouse0)){
+			attack = true;
+
+			Debug.Log("KEY DOWN");
+		}
+
+		if(Input.GetKeyUp(KeyCode.Mouse0)){
+			attack = false;
+
+			Debug.Log("KEY UP");
+		}
 	}
     
     void FixedUpdate()
     {
-		controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
+		controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump, ref attack);
 		jump = false;
 	}
 }
