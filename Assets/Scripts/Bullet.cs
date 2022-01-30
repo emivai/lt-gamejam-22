@@ -4,16 +4,8 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float speed = 5f;
     public Rigidbody2D rb;
     public int dmg = 1;
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        rb.velocity = new Vector2(speed, 0);
-    }
 
     void OnTriggerEnter2D(Collider2D hitInfo){
         if(hitInfo.name == "Player"){
