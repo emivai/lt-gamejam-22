@@ -8,7 +8,9 @@ public class DialogueManager : MonoBehaviour
     public Text nameText;
     public Text dialogueText;
     public Animator animator;
+    public Dialog_1_handler diaglogEndHandler;
     private Queue<string> Sentences;
+    private bool DialogOpen = false;
 
     public PlayerMovement player;
     
@@ -18,6 +20,7 @@ public class DialogueManager : MonoBehaviour
     }
     public void StartDialogue(Dialogue dialogue)
     {
+        DialogOpen = true;
         animator.SetBool("IsOpen", true);
         player.SetMovementDisabled(true);
 
@@ -32,6 +35,7 @@ public class DialogueManager : MonoBehaviour
     }
     public void DisplayNextSentence()
     {
+        if (!DialogOpen) return;
         if (Sentences.Count == 0) {
             EndDialogue();
             return;
@@ -42,6 +46,8 @@ public class DialogueManager : MonoBehaviour
     }
     void EndDialogue()
     {
+        DialogOpen = false;
+        diaglogEndHandler.EndDialog();
         animator.SetBool("IsOpen", false);
         player.SetMovementDisabled(false);
     }

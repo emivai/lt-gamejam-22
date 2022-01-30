@@ -19,10 +19,10 @@ public class Bullet : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D hitInfo){
-        Debug.Log(hitInfo.name);
-        Debug.Log(hitInfo.gameObject.tag);
+        //Debug.Log(hitInfo.name);
+        //Debug.Log(hitInfo.gameObject.tag);
         if(hitInfo.name == "Player"){
-            Debug.Log("Bullet hit the player");
+            //Debug.Log("Bullet hit the player");
 
             Player player = hitInfo.GetComponent<Player>();
 

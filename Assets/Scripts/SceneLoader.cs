@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 /// Basic scene loader triggered on the player collision
 /// To make scene available for loading enable those in (Editor window) File -> Build Settings... -> Add required scenes
 /// </summary>
-public class LoadLevel : MonoBehaviour
+public class SceneLoader : MonoBehaviour
 {
     public int iLevelToLoad;
     public string sLevelToLoad;

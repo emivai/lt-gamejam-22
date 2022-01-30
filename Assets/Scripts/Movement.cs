@@ -166,7 +166,7 @@ public class Movement : MonoBehaviour
 		{
 			m_Rigidbody2D.gravityScale = 0;
 			m_Rigidbody2D.velocity = Vector2.zero;
-			Debug.Log(climb);
+			//Debug.Log(climb);
             if (climb != 0)
             {
 				Vector3 targetVelocity = new Vector2(m_Rigidbody2D.velocity.x, climb * 10f);

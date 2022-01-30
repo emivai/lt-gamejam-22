@@ -55,13 +55,13 @@ public class PlayerMovement : MonoBehaviour
 		if(Input.GetKeyDown(KeyCode.Mouse0)){
 			attack = true;
 
-			Debug.Log("KEY DOWN");
+			//Debug.Log("KEY DOWN");
 		}
 
 		if(Input.GetKeyUp(KeyCode.Mouse0)){
 			attack = false;
 
-			Debug.Log("KEY UP");
+			//Debug.Log("KEY UP");
 		}
 	}
     
