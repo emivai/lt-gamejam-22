@@ -7,12 +7,15 @@ public class PlayerMovement : MonoBehaviour
 	public Movement controller;
 	
 	public float runSpeed = 40f;
+	public float climbSpeed = 10f;
 	float horizontalMove = 0f;
+	float verticalMove = 0f;
 	bool jump = false;
 	bool crouch = false;
+	bool attack = false;
 	private Animator anim;
 
-    private void Awake()
+	private void Awake()
     {
 		anim = GetComponent<Animator>();
 	}
@@ -20,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
+        verticalMove = Input.GetAxisRaw("Vertical") * climbSpeed;
         if(Input.GetKey(KeyCode.Space))
         {
 			jump = true;
@@ -31,13 +35,29 @@ public class PlayerMovement : MonoBehaviour
 		} else if(Input.GetButtonUp("Crouch"))
 		{
 			crouch = false;
-		}
+		}		
 		anim.SetBool("walking", horizontalMove != 0);
+
+		/*
+		 * Check whether the mouse button is pressed
+		 * plus the cooldown hasn't expired
+		 */
+		if(Input.GetKeyDown(KeyCode.Mouse0)){
+			attack = true;
+
+			Debug.Log("KEY DOWN");
+		}
+
+		if(Input.GetKeyUp(KeyCode.Mouse0)){
+			attack = false;
+
+			Debug.Log("KEY UP");
+		}
 	}
     
     void FixedUpdate()
     {
-		controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
+		controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump, ref attack, verticalMove * Time.fixedDeltaTime);
 		jump = false;
 	}
 }

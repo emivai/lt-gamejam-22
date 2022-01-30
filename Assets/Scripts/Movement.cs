@@ -7,7 +7,8 @@ public class Movement : MonoBehaviour
 	[Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;			// Amount of maxSpeed applied to crouching movement. 1 = 100%
 	[Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;	// How much to smooth out the movement
 	[SerializeField] private bool m_AirControl = false;							// Whether or not a player can steer while jumping;
-	[SerializeField] private LayerMask m_WhatIsGround;							// A mask determining what is ground to the character
+	[SerializeField] private LayerMask m_WhatIsGround;                          // A mask determining what is ground to the character
+	[SerializeField] private LayerMask wallLayer;								// A mask determining what are the pipes to the character
 	[SerializeField] private Transform m_GroundCheck;							// A position marking where to check if the player is grounded.
 	[SerializeField] private Transform m_CeilingCheck;							// A position marking where to check for ceilings
 	[SerializeField] private Collider2D m_CrouchDisableCollider;				// A collider that will be disabled when crouching
@@ -18,8 +19,18 @@ public class Movement : MonoBehaviour
 	private Rigidbody2D m_Rigidbody2D;
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 m_Velocity = Vector3.zero;
+	private BoxCollider2D boxCollider;
 
 	private Animator anim;
+
+	/*
+	 * MY OWN CODE
+	 */
+	private float attackCooldown = 0;
+	 /*
+	 * MY OWN CODE
+	 */
+
 
 
 	[Header("Events")]
@@ -37,6 +48,7 @@ public class Movement : MonoBehaviour
 	{
 		m_Rigidbody2D = GetComponent<Rigidbody2D>();
 		anim = GetComponent<Animator>();
+		boxCollider = GetComponent<BoxCollider2D>();
 		if (OnLandEvent == null)
 			OnLandEvent = new UnityEvent();
 
@@ -70,8 +82,17 @@ public class Movement : MonoBehaviour
     {
 		anim.SetBool("jump", false);
     }
-	public void Move(float move, bool crouch, bool jump)
+	public void Move(float move, bool crouch, bool jump, ref bool attack, float climb)
 	{
+		if(attack && attackCooldown > 0.45f){
+			anim.SetTrigger("attack");
+
+
+			attackCooldown = 0;
+		}
+
+		attackCooldown += Time.deltaTime;
+
 		// If crouching, check to see if the character can stand up
 		if (!crouch)
 		{
@@ -140,8 +161,29 @@ public class Movement : MonoBehaviour
 			m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
 			anim.SetBool("jump", true);
 		}
+
+		if (OnWall() && !m_Grounded)
+		{
+			m_Rigidbody2D.gravityScale = 0;
+			m_Rigidbody2D.velocity = Vector2.zero;
+			Debug.Log(climb);
+            if (climb != 0)
+            {
+				Vector3 targetVelocity = new Vector2(m_Rigidbody2D.velocity.x, climb * 10f);
+				m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
+			} 
+		}
+		else
+		{
+			m_Rigidbody2D.gravityScale = 3;
+		}
 	}
 
+	private bool OnWall()
+	{
+		RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, new Vector2(transform.localScale.x, 0), 0.1f, wallLayer);
+		return raycastHit.collider != null;
+	}
 
 	private void Flip()
 	{
