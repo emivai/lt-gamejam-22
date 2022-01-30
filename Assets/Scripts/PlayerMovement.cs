@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
 	bool jump = false;
 	bool crouch = false;
 	bool attack = false;
+	bool movementDisabled = false;
 	private Animator anim;
 
 	private void Awake()
@@ -22,9 +23,17 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
-        verticalMove = Input.GetAxisRaw("Vertical") * climbSpeed;
-        if(Input.GetKey(KeyCode.Space))
+		if (movementDisabled)
+		{
+			horizontalMove = 0.0f;
+			verticalMove = 0.0f;
+			anim.SetBool("walking", false);
+			return;
+		}
+
+		horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
+		verticalMove = Input.GetAxisRaw("Vertical") * climbSpeed;
+		if (Input.GetKey(KeyCode.Space))
         {
 			jump = true;
 		}
@@ -57,7 +66,16 @@ public class PlayerMovement : MonoBehaviour
     
     void FixedUpdate()
     {
+		if (movementDisabled)
+		{
+
+		};
 		controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump, ref attack, verticalMove * Time.fixedDeltaTime);
 		jump = false;
+	}
+
+	public void SetMovementDisabled(bool state)
+	{
+		movementDisabled = state;
 	}
 }
