@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6441202461576387966}
   - component: {fileID: 6441202461576387967}
   - component: {fileID: 6441202461576387952}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,6 +97,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c84ca31992c6b78abc18df2fa93478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 1
+  elapsedTime: 0
+  maxRange: 10
   rb: {fileID: 6441202461576387967}
   dmg: 1
 --- !u!50 &6441202461576387967

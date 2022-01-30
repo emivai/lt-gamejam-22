@@ -4,19 +4,18 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public float health = 1;
+    public float elapsedTime = 0;
+    public float maxRange = 10f;
     public Rigidbody2D rb;
     public int dmg = 1;
-    public float extraArea = 10f;
 
     void Update(){
-        /*
-         * TODO: Fix this fucking shit
-         */
-        if(Camera.main.transform.position.x + extraArea - gameObject.transform.position.x < 0 &&
-           Camera.main.transform.position.y + extraArea - gameObject.transform.position.y < 0){
-               Destroy(gameObject);
-           }
+        if(rb.velocity.magnitude * elapsedTime > maxRange){
+            Destroy(gameObject);
+        }
 
+        elapsedTime += Time.deltaTime;
     }
 
     void OnTriggerEnter2D(Collider2D hitInfo){
@@ -29,6 +28,14 @@ public class Bullet : MonoBehaviour
                 player.TakeDamage(dmg);
             }
 
+            Destroy(gameObject);
+        }
+    }
+
+    public void Damage(int damage){
+        health -= damage;
+
+        if(health <= 0){
             Destroy(gameObject);
         }
     }
