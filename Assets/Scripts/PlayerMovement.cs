@@ -46,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
 			crouch = false;
 		}		
 		anim.SetBool("walking", horizontalMove != 0);
+		anim.SetBool("climbing", verticalMove != 0);
 
 		/*
 		 * Check whether the mouse button is pressed
